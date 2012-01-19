@@ -1,0 +1,11 @@
+
+Algorithms:
+The constructor should store the fraction in reduced form (apply Euclid's algorithm)
+
+Methods: 
+a) Add two rational numbers: The result of the addition should be stored in reduced form. Implement this as a static method.
+b) Subtract two rational numbers: The result of the subtraction should be stored in reduced form. Implement this as a static method.
+c) Multiply two rational numbers: The result of the multiplication should be stored in reduced form. Implement this as a static method.
+d) Divide two rational numbers: The result of the division should be stored in reduced form. Implement this as a static method.  (JM: What do you do about division by zero.)
+e) Return a String representation of a Rational number in the form a/b, where a is the numerator and b is the denominator.
+f) Return a String representation of a Rational number in floating-point format. (Consider providing formatting capabilities that enable the user of the class to specify the number of digits of precision to the right of the decimal point.)
