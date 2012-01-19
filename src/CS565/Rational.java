@@ -48,5 +48,13 @@ public class Rational {
 		Rational result = new Rational(one.numerator - two.numerator, one.denominator);
 		
 		return result;
-	} 
+	}
+
+	public static Rational multiply(Rational one, Rational two) {
+		return new Rational(one.numerator * two.numerator, one.denominator * two.denominator);
+	}
+
+	public static Rational divide(Rational one, Rational two) {
+		return new Rational(one.numerator * two.denominator, one.denominator * two.numerator);
+	}
 }

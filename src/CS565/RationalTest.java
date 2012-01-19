@@ -82,4 +82,28 @@ public class RationalTest {
 		Assert.fail("Should have thrown exception since denominators are different");
 	}
 
+	@Test
+	public void CanMultiplyRationalNumbers() {
+		Rational result1 = Rational.multiply(whole, half);
+		Assert.assertTrue("String value should be 1/2, was "+ result1.toFractionString(), result1.toFractionString().equals("1/2"));
+		Assert.assertTrue("String value should be 0.5", result1.toFloatString().equals("0.5"));
+
+		Rational another = new Rational(4,2); // overrides class whole variable
+		Rational result2 = Rational.multiply(another, half);
+		Assert.assertTrue("String value should be 4/4, was "+ result2.toFractionString(), result2.toFractionString().equals("4/4"));
+		Assert.assertTrue("String value should be 1.0", result2.toFloatString().equals("1.0"));
+	}
+
+	@Test
+	public void CanDivideRationalNumbers() {
+		Rational result1 = Rational.divide(whole, half);
+		Assert.assertTrue("String value should be 2/1, was "+ result1.toFractionString(), result1.toFractionString().equals("2/1"));
+		Assert.assertTrue("String value should be 2.0", result1.toFloatString().equals("2.0"));
+
+		Rational another = new Rational(4,2); // overrides class whole variable
+		Rational result2 = Rational.divide(another, half);
+		Assert.assertTrue("String value should be 8/2, was "+ result2.toFractionString(), result2.toFractionString().equals("8/2"));
+		Assert.assertTrue("String value should be 4.0", result2.toFloatString().equals("4.0"));
+	}
+
 }
