@@ -51,12 +51,10 @@ public class Rational {
 	public static Rational add(Rational one, Rational two) {
 		
 		int lcm = MathHelper.LeastCommonMultiple(one.denominator, two.denominator);
-		//System.out.println("Add "+ one.toFractionString() + " and "+ two.toFractionString() + ", LCM = "+ lcmRational.toFractionString());
 		one.adjustToLCM(lcm);
 		two.adjustToLCM(lcm);
-		//System.out.println(" ---- After: "+ one.toFractionString() + " and "+ two.toFractionString());
 		
-		// temporary limitation until we get the LCD stuff done
+		// leaving this in as a sanity check
 		if (one.denominator != two.denominator)
 			throw new RuntimeException("To add two Rationals they must have the same denominator");
 		
@@ -70,7 +68,7 @@ public class Rational {
 		one.adjustToLCM(lcm);
 		two.adjustToLCM(lcm);
 		
-		// temporary limitation until we get the LCD stuff done
+		// leaving this in as a sanity check
 		if (one.denominator != two.denominator)
 			throw new RuntimeException("To subtract two Rationals they must have the same denominator");
 		
