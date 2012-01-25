@@ -1,5 +1,2 @@
 Methods: 
 g) Provide formatting capabilities that enable the user of the class to specify the number of digits of precision to the right of the decimal point.)
-h) Add way to find LCD to convert operands for Add & Subtract
-i) Reduce result from Add & Subtract
-j) Deal with divide by 0 for Divide

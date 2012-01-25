@@ -11,11 +11,7 @@ public class RationalTest {
 	@Before
 	public void setUp() throws Exception {
 		half = new Rational(1, 2);
-		whole = new Rational();
-	}
-
-	@After
-	public void tearDown() throws Exception {
+		whole = new Rational(); // defaults to (1,1)
 	}
 	
 	@Test
