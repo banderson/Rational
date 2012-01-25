@@ -9,12 +9,30 @@ public class Rational {
 	public Rational(int numerator, int denominator) {
 		this.numerator = numerator;
 		this.denominator = denominator;
+		
+		this.Reduce(); //reduce immediately
 	}
 	
 	// no-arg ctor to initialize a "1"
 	public Rational() {
-		this.numerator = 1;
-		this.denominator = 1;
+		this(1,1);
+	}
+	
+	public void Reduce() {
+		int gcd = MathHelper.GreatestCommonDivisor(this.numerator, this.denominator);
+		
+		// avoid divide by 0
+		if (gcd > 0) {
+			this.numerator = this.numerator / gcd;
+			this.denominator = this.denominator / gcd;
+		}
+	}
+	
+	private void adjustToLCM(int lcm) {
+		int factor = lcm/this.denominator;
+		
+		this.numerator *= factor;
+		this.denominator = lcm;
 	}
 
 	// convert to fraction string
@@ -31,6 +49,13 @@ public class Rational {
 	}
 
 	public static Rational add(Rational one, Rational two) {
+		
+		int lcm = MathHelper.LeastCommonMultiple(one.denominator, two.denominator);
+		//System.out.println("Add "+ one.toFractionString() + " and "+ two.toFractionString() + ", LCM = "+ lcmRational.toFractionString());
+		one.adjustToLCM(lcm);
+		two.adjustToLCM(lcm);
+		//System.out.println(" ---- After: "+ one.toFractionString() + " and "+ two.toFractionString());
+		
 		// temporary limitation until we get the LCD stuff done
 		if (one.denominator != two.denominator)
 			throw new RuntimeException("To add two Rationals they must have the same denominator");
@@ -41,6 +66,10 @@ public class Rational {
 	}
 
 	public static Rational subtract(Rational one, Rational two) {
+		int lcm = MathHelper.LeastCommonMultiple(one.denominator, two.denominator);
+		one.adjustToLCM(lcm);
+		two.adjustToLCM(lcm);
+		
 		// temporary limitation until we get the LCD stuff done
 		if (one.denominator != two.denominator)
 			throw new RuntimeException("To subtract two Rationals they must have the same denominator");
@@ -55,6 +84,19 @@ public class Rational {
 	}
 
 	public static Rational divide(Rational one, Rational two) {
+		// prevent divide by zero
+		if (two.numerator == 0)
+			throw new RuntimeException("Cannot divide by Rational with numerator of 0 (divide by zero exception)");
+					
 		return new Rational(one.numerator * two.denominator, one.denominator * two.numerator);
+	}
+	
+	//TODO override equals and hashcode instead
+	public boolean Equals(Rational other) {
+		if (this.numerator == other.numerator && this.denominator == other.denominator) {
+			return true;
+		}
+		
+		return false;
 	}
 }
