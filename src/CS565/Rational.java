@@ -1,7 +1,5 @@
 package CS565;
 
-import java.lang.Exception;
-
 public class Rational {
 	private int numerator, denominator;
 	
