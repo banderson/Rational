@@ -1,0 +1,8 @@
+# Rational - a Java implementation of Rational numbers
+
+A simple school assignment to implement the basic functionality of Rational Numbers:
+* Add
+* Subtract
+* Mutlipl
+* Divide
+* Reduce to lowest form (using Euclidean algorithm)
