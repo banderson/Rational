@@ -118,32 +118,32 @@ public class RationalTest {
 		Rational edge = new Rational(17,51); // should reduce to 1/3
 		Rational third = new Rational(3,9); // should reduce to 1/3
 		
-		Assert.assertTrue("Should equal equivalent Rational in reduced form (1/1)", whole.Equals(full));
+		Assert.assertTrue("Should equal equivalent Rational in reduced form (1/1)", whole.equals(full));
 		Assert.assertTrue("Should be 1/1 in reduced form", whole.toFractionString().equals("1/1"));
 		
-		Assert.assertTrue("Should equal equivalent Rational in reduced form (1/2)", half.Equals(mid));
+		Assert.assertTrue("Should equal equivalent Rational in reduced form (1/2)", half.equals(mid));
 		Assert.assertTrue("Should be 1/2 in reduced form", half.toFractionString().equals("1/2"));
 		
-		Assert.assertTrue("Should equal equivalent Rational in reduced form (1/3)", edge.Equals(third));
+		Assert.assertTrue("Should equal equivalent Rational in reduced form (1/3)", edge.equals(third));
 		Assert.assertTrue("Should be 1/3 in reduced form", third.toFractionString().equals("1/3"));
 	}
 	
 	@Test
 	public void CanAddWithDifferentDenominators() {
 		Rational threeHalfs = new Rational(6, 4);
-		Assert.assertTrue("Result should be same as reduced half Rationals", Rational.add(whole, half).Equals(threeHalfs));
+		Assert.assertTrue("Result should be same as reduced half Rationals", Rational.add(whole, half).equals(threeHalfs));
 	}
 	
 	@Test
 	public void AddShouldBeCommutative() {
-		Assert.assertTrue("Adding rationals should be commutative", Rational.add(whole, half).Equals(Rational.add(half, whole)));
+		Assert.assertTrue("Adding rationals should be commutative", Rational.add(whole, half).equals(Rational.add(half, whole)));
 	}
 	
 	@Test
 	public void CanSubtractWithDifferentDenominators() {
 		Rational.subtract(whole, half);
 		
-		Assert.assertTrue("Result should be same as reduced half Rationals", Rational.subtract(whole, half).Equals(half));
+		Assert.assertTrue("Result should be same as reduced half Rationals", Rational.subtract(whole, half).equals(half));
 		Assert.assertTrue("Final result should be 1/2", Rational.subtract(whole, half).toFractionString().equals("1/2"));
 	}
 	

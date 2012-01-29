@@ -99,12 +99,31 @@ public class Rational {
 		return new Rational(one.numerator * two.denominator, one.denominator * two.numerator);
 	}
 	
-	//TODO override equals and hashcode instead
-	public boolean Equals(Rational other) {
+	@Override public boolean equals(Object o) {
+		// if it's an object of different type it's always false
+		if (!(o instanceof Rational))
+			return false;
+		
+		// cast the object to Rational
+		Rational other = (Rational)o;
+		// since the Rational is always reduced we can do this simple compare
 		if (this.numerator == other.numerator && this.denominator == other.denominator) {
 			return true;
 		}
 		
 		return false;
+	}
+	
+	// we must override this since we overrode equals above
+	@Override public int hashCode() {
+		// for details on the use of result and prime below, see Effective Java, 2E, page 47-48
+		int result = 7; // arbitrary number
+		int prime = 31; // this ensures order matters
+		
+		// factor in each field used in the equals method
+		result = prime * result + numerator;
+		result = prime * result + denominator;
+		
+		return result;
 	}
 }
