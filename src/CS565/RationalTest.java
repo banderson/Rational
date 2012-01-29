@@ -32,8 +32,8 @@ public class RationalTest {
 	
 	@Test
 	public void CanReturnStringValAsFloat() {
-		Assert.assertTrue("String value should be 1/2, was "+ half.toFloatString(), half.toFloatString().equals("0.5"));
-		Assert.assertTrue("String value should be 1/1, was "+ whole.toFloatString(), whole.toFloatString().equals("1.0"));
+		Assert.assertTrue("String value should be 1/2, was "+ half.toFloatString(), half.toFloatString().equals("0.50"));
+		Assert.assertTrue("String value should be 1/1, was "+ whole.toFloatString(), whole.toFloatString().equals("1.00"));
 	}
 	
 	@Test
@@ -42,7 +42,7 @@ public class RationalTest {
 		Rational result = Rational.add(half, another);
 		
 		Assert.assertTrue("String value should be 5/2, "+ result.toFractionString(), result.toFractionString().equals("5/2"));
-		Assert.assertTrue("String value should be 2.5", result.toFloatString().equals("2.5"));
+		Assert.assertTrue("String value should be 2.5", result.toFloatString().equals("2.50"));
 	}
 
 	@Test
@@ -51,7 +51,7 @@ public class RationalTest {
 		Rational result = Rational.subtract(another, half);
 		
 		Assert.assertTrue("String value should be 3/2, was "+ result.toFractionString(), result.toFractionString().equals("3/2"));
-		Assert.assertTrue("String value should be 1.5", result.toFloatString().equals("1.5"));
+		Assert.assertTrue("String value should be 1.5", result.toFloatString().equals("1.50"));
 	}
 	
 	@Test
@@ -76,24 +76,24 @@ public class RationalTest {
 	public void CanMultiplyRationalNumbers() {
 		Rational result1 = Rational.multiply(whole, half);
 		Assert.assertTrue("String value should be 1/2, was "+ result1.toFractionString(), result1.toFractionString().equals("1/2"));
-		Assert.assertTrue("String value should be 0.5", result1.toFloatString().equals("0.5"));
+		Assert.assertTrue("String value should be 0.5", result1.toFloatString().equals("0.50"));
 
 		Rational another = new Rational(4,2); // overrides class whole variable
 		Rational result2 = Rational.multiply(another, half);
 		Assert.assertTrue("String value should be 4/4, was "+ result2.toFractionString(), result2.toFractionString().equals("1/1"));
-		Assert.assertTrue("String value should be 1.0", result2.toFloatString().equals("1.0"));
+		Assert.assertTrue("String value should be 1.0", result2.toFloatString().equals("1.00"));
 	}
 
 	@Test
 	public void CanDivideRationalNumbers() {
 		Rational result1 = Rational.divide(whole, half);
 		Assert.assertTrue("String value should be 2/1, was "+ result1.toFractionString(), result1.toFractionString().equals("2/1"));
-		Assert.assertTrue("String value should be 2.0", result1.toFloatString().equals("2.0"));
+		Assert.assertTrue("String value should be 2.0", result1.toFloatString().equals("2.00"));
 
 		Rational another = new Rational(4,2); // overrides class whole variable
 		Rational result2 = Rational.divide(another, half);
 		Assert.assertTrue("String value should be 8/2, was "+ result2.toFractionString(), result2.toFractionString().equals("4/1"));
-		Assert.assertTrue("String value should be 4.0", result2.toFloatString().equals("4.0"));
+		Assert.assertTrue("String value should be 4.0", result2.toFloatString().equals("4.00"));
 	}
  
 	@Test
@@ -145,6 +145,19 @@ public class RationalTest {
 		
 		Assert.assertTrue("Result should be same as reduced half Rationals", Rational.subtract(whole, half).Equals(half));
 		Assert.assertTrue("Final result should be 1/2", Rational.subtract(whole, half).toFractionString().equals("1/2"));
+	}
+	
+	@Test
+	public void CanSpecifyNumDecimals() {
+		Assert.assertEquals("Should have 2 decimals", whole.toFloatString(2), "1.00");
+		Assert.assertEquals("Should have 0 decimals", whole.toFloatString(0), "1");
+		
+		Assert.assertEquals("Should have 1 decimals", half.toFloatString(1), "0.5");
+		Assert.assertEquals("Should have 0 decimals, rounded", half.toFloatString(0), "1");
+		
+		Rational third = new Rational(3,9); // should reduce to 1/3
+		Assert.assertEquals("Should have 5 decimals", third.toFloatString(5), "0.33333");
+		Assert.assertEquals("Should have 0 decimals", third.toFloatString(0), "0");
 	}
 
 }

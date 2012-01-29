@@ -1,2 +1,2 @@
 Methods: 
-g) Provide formatting capabilities that enable the user of the class to specify the number of digits of precision to the right of the decimal point.)
+h) Override equals() and hashcode() and remove Equals method11

@@ -2,6 +2,7 @@ package CS565;
 
 public class Rational {
 	private int numerator, denominator;
+	private static final int DEFAULT_NUM_DECIMALS = 2;
 	
 	// ctor that takes a numerator and denominator to form a Rational
 	public Rational(int numerator, int denominator) {
@@ -16,6 +17,7 @@ public class Rational {
 		this(1,1);
 	}
 	
+	// reduce the fraction to it's lowest form
 	public void Reduce() {
 		int gcd = MathHelper.GreatestCommonDivisor(this.numerator, this.denominator);
 		
@@ -26,6 +28,7 @@ public class Rational {
 		}
 	}
 	
+	// given an LCM, adjust the fraction to it's equivalent form
 	private void adjustToLCM(int lcm) {
 		int factor = lcm/this.denominator;
 		
@@ -40,12 +43,18 @@ public class Rational {
 	
 	// convert to floating point string
 	public String toFloatString() {
+		return this.toFloatString(DEFAULT_NUM_DECIMALS);
+	}
+	
+	// convert to floating point string
+	public String toFloatString(int numDecimals) {
 		// cast each to float so we don't lose precision from ints
 		float result = (float)this.numerator / (float)this.denominator;
 		
-		return result + ""; // + "" converts it to a string 
+		return String.format("%."+ numDecimals +"f", result); // + "" converts it to a string 
 	}
 
+	// Rational addition
 	public static Rational add(Rational one, Rational two) {
 		
 		int lcm = MathHelper.LeastCommonMultiple(one.denominator, two.denominator);
@@ -61,6 +70,7 @@ public class Rational {
 		return result;
 	}
 
+	// Rational subtraction
 	public static Rational subtract(Rational one, Rational two) {
 		int lcm = MathHelper.LeastCommonMultiple(one.denominator, two.denominator);
 		one.adjustToLCM(lcm);
@@ -75,10 +85,12 @@ public class Rational {
 		return result;
 	}
 
+	// Rational multiplication
 	public static Rational multiply(Rational one, Rational two) {
 		return new Rational(one.numerator * two.numerator, one.denominator * two.denominator);
 	}
 
+	// Rational division, using cross multiplication
 	public static Rational divide(Rational one, Rational two) {
 		// prevent divide by zero
 		if (two.numerator == 0)
