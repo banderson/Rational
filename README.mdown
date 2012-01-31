@@ -1,8 +1,15 @@
 # Rational - a Java implementation of Rational numbers
 
-A simple school assignment to implement the basic functionality of Rational Numbers:
+A simple assignment to implement the basic functionality of Rational Numbers:
 * Add
 * Subtract
 * Mutlipl
 * Divide
 * Reduce to lowest form (using Euclidean algorithm)
+
+Source Files:
+* Rational.java: basic Rational functionality described above
+* RationalTest.java: JUnit test class to exercise functionality to verify accuracy
+* RationalTestRun.java: test class to exercise functionality in main() for those without JUnit
+* MathHelper.java: basic helper functions for determining LCM and GCD for use in reducing fractions
+
