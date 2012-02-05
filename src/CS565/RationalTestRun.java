@@ -1,58 +1,75 @@
 package CS565;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class RationalTestRun {
 	
 	public static void main(String[] args) {
-		// default ctor returns 1/1
-		Rational r = new Rational();
-		puts("default ctor returns 1/1: \n\t"+ r.toFractionString() + " or " + r.toFloatString());
-
-		// constructor can take numerator, denominator to initialize
-		Rational half = new Rational(1, 2);
-		puts("ctor takes numerator, denominator to initialize: \n\tnew Rational(1, 2) == "+ half.toFractionString() + " or " + half.toFloatString());
+		// numerator and denominator for both Rationals
+		int n1, d1, n2, d2;
+		// operation to perform
+		String op = "+";
+		// rationals for operands and result
+		Rational first, second, result;
 		
-		// we can print the value as a fraction
-		puts("we can print the value as a fraction: \n\tnew Rational(1, 2) == "+ half.toFractionString());
+		// scan the input with whitespace and the "/" as delimiters
+		Scanner input = new Scanner(System.in).useDelimiter("/|\\s*");
 
-		// we can print the value as a float
-		puts("we can print the value as a float: \n\tnew Rational(1, 2) == "+ half.toFloatString());
-
-		// we can specify number of decimals when printing float
-		puts("we can specify number of decimals when printing float: \n\tnew Rational(1, 2).toFloat(4) == "+ half.toFloatString(4));
-
-		// it is automatically reduced when initialized
-		Rational third = new Rational(17, 51);
-		puts("it is automatically reduced when initialized: \n\tnew Rational(17, 51) == "+ new Rational(17, 51).toFractionString());
-
-		// we can add two rationals to produce a new rational
-		puts("we can add two rationals to produce a new rational: \n\t1/2 plus 1/3 == "+ Rational.add(half, third).toFractionString());
-
-		// Add is commutative
-		puts("add is commutative: \n\t1/3 + 1/2 == "+ Rational.add(third, half).toFractionString());
-
-		// we can subtract two rationals
-		puts("we can subtract two rationals: \n\t1/2 - 1/3 == "+ Rational.subtract(half, third).toFractionString());
-
-		// we can multiply two rationals to produce a new rational
-		Rational quarter = new Rational(1, 4);
-		puts("we can multiply two rationals to produce a new rational: \n\t1/4 * 1/3 == "+ Rational.multiply(quarter, third).toFractionString());
-
-		// we can divide two rationals
-		puts("we can divide two rationals: \n\t1/4 / 1/3 == "+ Rational.divide(quarter, third).toFractionString());
-
-		// divide by zero is handled
-		puts("divide by zero is handled:");
-		Rational zero = new Rational(0, 1);
-		try	{
-			Rational.divide(quarter, zero);
-		} catch (RuntimeException ex) {
-			puts("\tthrew and handled exception since divide by zero occured");
+		puts("Enter your expression in the form n/n [+-*/] n/n where n is an integer or EXIT to quit.");
+		puts("\tExamples: 1/2 + 2/1 \t 1/2 - 1/3 \t 1/2 * 1/3 \t 1/2 / 1/3");
+		
+		// indicate whether we should continue asking for input 
+		boolean done = false; 
+		
+		while (done == false) {
+			try {
+				// get the first Rational
+				n1 = input.nextInt();
+				d1 = input.nextInt();
+				first = new Rational(n1, d1);
+				
+				// get the operation
+				if (input.hasNext("[+-/*]")) {
+					op = input.next("[+-/*]");
+				} else {
+					// since "/" is a delimiter, it won't register in the scanner and we must assume
+					op = "/";
+					// since "/" is a delimiter, we need to push the scanner object forward
+					// I don't know why we need to move it ahead 2 places, but it's required
+					input.next(); input.next();
+				}
+				
+				// get the second Rational
+				n2 = input.nextInt();
+				d2 = input.nextInt();
+				second = new Rational(n2, d2);
+				
+				// choose an operation based on user input
+				if (op.equals("+")) {
+					result = Rational.add(first, second);
+				} else if (op.equals("-")) {
+					result = Rational.subtract(first, second);
+				} else if (op.equals("*")) {
+					result = Rational.multiply(first, second);
+				} else { // (op == "/") {
+					result = Rational.divide(first, second);
+				}
+				
+				puts("\t"+ first.toFractionString() +" "+ op +" "+ second.toFractionString() + " == "+ result.toFractionString());
+			} catch (InputMismatchException iex) {
+				if (input.nextLine().equalsIgnoreCase("EXIT")) {
+					puts("Thanks for playing!");
+					done = true; //stop looping
+				} else {
+					puts("Oops, you typed something wrong. Try again or type EXIT to quit.");
+				}
+			}
 		}
 	}
 	
 	// shortcut functions to simplify and shorten above code
 	private static void puts(String out) {
-		System.out.println(out + "\n");
+		System.out.println(out);
 	}
-
 }
