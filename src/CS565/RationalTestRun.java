@@ -1,7 +1,7 @@
 package CS565;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.MatchResult;
 
 public class RationalTestRun {
 	
@@ -12,37 +12,29 @@ public class RationalTestRun {
 		String op = "+";
 		// rationals for operands and result
 		Rational first, second, result;
-		
-		// scan the input with whitespace and the "/" as delimiters
-		Scanner input = new Scanner(System.in).useDelimiter("/|\\s*");
 
-		puts("Enter your expression in the form n/n [+-*/] n/n where n is an integer or EXIT to quit.");
-		puts("\tExamples: 1/2 + 2/1 \t 1/2 - 1/3 \t 1/2 * 1/3 \t 1/2 / 1/3");
+		System.out.println("Enter your expression in the form n/n [+-*/] n/n where n is an integer or EXIT to quit.");
+		System.out.println("\tExamples: 1/2 + 2/1 \t 1/2 - 1/3 \t 1/2 * 1/3 \t 1/2 / 1/3");
 		
 		// indicate whether we should continue asking for input 
 		boolean done = false; 
 		
 		while (done == false) {
+			Scanner input = new Scanner(System.in);
+			// scan the input for the correct rational expression pattern
+			input.findInLine("(\\d+)/(\\d+)\\s*([+*/-])\\s*(\\d+)/(\\d+)");
 			try {
+				MatchResult matches = input.match();
 				// get the first Rational
-				n1 = input.nextInt();
-				d1 = input.nextInt();
+				n1 = Integer.parseInt(matches.group(1));
+				d1 = Integer.parseInt(matches.group(2));
 				first = new Rational(n1, d1);
 				
-				// get the operation
-				if (input.hasNext("[+-/*]")) {
-					op = input.next("[+-/*]");
-				} else {
-					// since "/" is a delimiter, it won't register in the scanner and we must assume
-					op = "/";
-					// since "/" is a delimiter, we need to push the scanner object forward
-					// I don't know why we need to move it ahead 2 places, but it's required
-					input.next(); input.next();
-				}
+				op = matches.group(3);
 				
 				// get the second Rational
-				n2 = input.nextInt();
-				d2 = input.nextInt();
+				n2 = Integer.parseInt(matches.group(4));
+				d2 = Integer.parseInt(matches.group(5));
 				second = new Rational(n2, d2);
 				
 				// choose an operation based on user input
@@ -56,20 +48,17 @@ public class RationalTestRun {
 					result = Rational.divide(first, second);
 				}
 				
-				puts("\t"+ first.toFractionString() +" "+ op +" "+ second.toFractionString() + " == "+ result.toFractionString());
-			} catch (InputMismatchException iex) {
+				System.out.println("\t"+ first.toFractionString() +" "+ op +" "+ second.toFractionString() + " == "+ result.toFractionString());
+				
+			} catch (IllegalStateException e) {
+				// if the pattern wasn't found, handle other cases
 				if (input.nextLine().equalsIgnoreCase("EXIT")) {
-					puts("Thanks for playing!");
+					System.out.println("Thanks for playing!");
 					done = true; //stop looping
 				} else {
-					puts("Oops, you typed something wrong. Try again or type EXIT to quit.");
+					System.out.println("Your input doesn't match the correct expression pattern. Try again...\n");
 				}
 			}
 		}
-	}
-	
-	// shortcut functions to simplify and shorten above code
-	private static void puts(String out) {
-		System.out.println(out);
 	}
 }
